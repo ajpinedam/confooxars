@@ -1,0 +1,21 @@
+{
+  "solution": {
+    "path": "confoolasters.sln",
+    "projects": [
+		"confoolasters.Shared\\confoolasters.Shared.shproj",
+
+		"confoolasters.Droid\\confoolasters.Droid.csproj",
+
+		"confoolasters.iOS\\confoolasters.iOS.csproj",
+
+
+		"confoolasters.Wasm\\confoolasters.Wasm.csproj",
+
+		"confoolasters.macOS\\confoolasters.macOS.csproj",
+
+		"confoolasters.Skia.Gtk\\confoolasters.Skia.Gtk.csproj",
+
+		"confoolasters.Skia.Linux.FrameBuffer\\confoolasters.Skia.Linux.FrameBuffer.csproj",
+    ]
+  }
+}
