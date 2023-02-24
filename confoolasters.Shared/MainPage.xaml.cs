@@ -23,6 +23,8 @@ using Windows.UI.Xaml.Navigation;
 using DynamicData.Binding;
 using Windows.UI.Core;
 using Windows.System;
+using System.Threading.Tasks;
+using Windows.Storage;
 
 
 
@@ -76,6 +78,8 @@ namespace confoolasters
 
         public ICommand DeleteItemCommand { get; }
 
+        public ICommand GoCrazyCommand { get; }
+
         public MainViewModel()
         {
             _data = new DataLoad();
@@ -84,6 +88,8 @@ namespace confoolasters
             AddItemCommand = new DelegateCommand(AddItem);
             UpdateItemCommand = new DelegateCommand(UpdateItem);
             DeleteItemCommand = new DelegateCommand(DeleteItem);
+            GoCrazyCommand = new DelegateCommand(async () => await GoCrazyTask());
+
 
             var sourceObservable = _sourceCache.Connect();
 
@@ -153,6 +159,14 @@ namespace confoolasters
                 Url = "https://via.placeholder.com/150/92c952"
             };
             _sourceCache.AddOrUpdate(photo);
+        }
+
+        private async Task GoCrazyTask()
+        {
+            await _data.GoCrazy();
+
+            _sourceCache.Clear();
+            _sourceCache.AddOrUpdate(_data.GetData());
         }
 
         private readonly ReadOnlyObservableCollection<Photo> _photosBinding;
@@ -289,6 +303,15 @@ namespace confoolasters
                 ]
                 """;
 
+            var parsed = Newtonsoft.Json.JsonConvert.DeserializeObject<Photo[]>(data);
+
+            _photo = new List<Photo>(parsed);
+        }
+
+        public async Task GoCrazy()
+        {
+            var file = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///photos.json"));
+            var data = await FileIO.ReadTextAsync(file);
             var parsed = Newtonsoft.Json.JsonConvert.DeserializeObject<Photo[]>(data);
 
             _photo = new List<Photo>(parsed);

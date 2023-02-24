@@ -64,6 +64,9 @@
             <Button Command="{Binding DeleteItemCommand}"
                     Content="Delete Item" />
         </StackPanel>
+        <StackPanel Grid.Column="2">
+            <Button Command="{Binding GoCrazyCommand}" Content="Go crazy!!" />
+        </StackPanel>
 
         <ListView ItemsSource="{Binding Photos}"
                   Grid.Column="0"
